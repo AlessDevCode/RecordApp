@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Evita que R8 elimine en release los recursos que Android solo busca por
+  nombre en tiempo de ejecución: los sonidos de las notificaciones (raw) y
+  el icono de la barra de estado. Sin esto, las notificaciones de release
+  pueden quedar mudas o sin icono.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@raw/*,@drawable/ic_stat_mission" />

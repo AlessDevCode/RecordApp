@@ -1,0 +1,59 @@
+
+{
+  "home": {
+    "title": "MISSIONS",
+    "empty": "No missions registered",
+    "empty_filtered": "No missions match the filters",
+    "new_task": "New mission",
+    "settings": "Settings",
+    "error": "Missions could not be loaded",
+    "retry": "Retry"
+  },
+  "filters": {
+    "on_time": "ON TIME",
+    "critical": "CRITICAL",
+    "clear": "Clear filters"
+  },
+  "card": {
+    "overdue": "CRITICAL",
+    "delete": "Delete mission"
+  },
+  "editor": {
+    "title": "NEW MISSION",
+    "field_title": "Title",
+    "field_description": "Description",
+    "category": "Category",
+    "category_auto": "AUTOMATIC",
+    "detected": "Detected category",
+    "date": "Due date",
+    "time": "Due time",
+    "alarm": "Alarm type",
+    "alarm_sound": "Sound",
+    "alarm_silent": "Silent",
+    "alarm_forced": "The ALARMA category always uses sound.",
+    "notes_hint": "Notes do not handle date, time or alarm.",
+    "save": "Save mission",
+    "title_required": "Title is required",
+    "save_error": "The mission could not be saved"
+  },
+  "settings": {
+    "title": "SETTINGS",
+    "appearance": "APPEARANCE",
+    "theme": "Visual theme",
+    "theme_light": "Light",
+    "theme_dark": "Dark",
+    "theme_system": "System",
+    "general": "GENERAL",
+    "language": "Language",
+    "notifications": "Notifications",
+    "notifications_desc": "Enable mission alerts",
+    "username": "Operator name",
+    "username_save": "Save",
+    "time_format": "Time format",
+    "date_format": "Date format"
+  },
+  "alert": {
+    "mission": "MISSION ALERT",
+    "silence": "SILENCE"
+  }
+}

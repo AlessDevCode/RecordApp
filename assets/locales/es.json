@@ -1,0 +1,59 @@
+
+{
+  "home": {
+    "title": "MISIONES",
+    "empty": "Sin misiones registradas",
+    "empty_filtered": "Ninguna misión coincide con los filtros",
+    "new_task": "Nueva misión",
+    "settings": "Configuración",
+    "error": "No se pudieron cargar las misiones",
+    "retry": "Reintentar"
+  },
+  "filters": {
+    "on_time": "EN TIEMPO",
+    "critical": "CRÍTICO",
+    "clear": "Limpiar filtros"
+  },
+  "card": {
+    "overdue": "CRÍTICO",
+    "delete": "Eliminar misión"
+  },
+  "editor": {
+    "title": "NUEVA MISIÓN",
+    "field_title": "Título",
+    "field_description": "Descripción",
+    "category": "Categoría",
+    "category_auto": "AUTOMÁTICO",
+    "detected": "Categoría detectada",
+    "date": "Fecha límite",
+    "time": "Hora límite",
+    "alarm": "Tipo de alarma",
+    "alarm_sound": "Sonido",
+    "alarm_silent": "Silencioso",
+    "alarm_forced": "La categoría ALARMA siempre usa sonido.",
+    "notes_hint": "Las notas no manejan fecha, hora ni alarma.",
+    "save": "Guardar misión",
+    "title_required": "El título es obligatorio",
+    "save_error": "No se pudo guardar la misión"
+  },
+  "settings": {
+    "title": "CONFIGURACIÓN",
+    "appearance": "APARIENCIA",
+    "theme": "Tema visual",
+    "theme_light": "Claro",
+    "theme_dark": "Oscuro",
+    "theme_system": "Sistema",
+    "general": "GENERAL",
+    "language": "Idioma",
+    "notifications": "Notificaciones",
+    "notifications_desc": "Habilitar alertas de misiones",
+    "username": "Nombre de operador",
+    "username_save": "Guardar",
+    "time_format": "Formato de hora",
+    "date_format": "Formato de fecha"
+  },
+  "alert": {
+    "mission": "ALERTA DE MISIÓN",
+    "silence": "SILENCIAR"
+  }
+}

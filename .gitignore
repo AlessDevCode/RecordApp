@@ -1,0 +1,79 @@
+# =================It
+# Miscellaneous / General
+# =================
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+bash-fc-
+
+# =================
+# IDEs & Editors
+# =================
+
+# IntelliJ / Android Studio
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Visual Studio Code
+# (Descomenta la siguiente línea si no quieres versionar la configuración de VS Code)
+#.vscode/
+
+# =================
+# Android
+# =================
+/android/app/debug
+/android/app/profile
+/android/app/release
+android/app/libs/
+android/.gradle/
+android/captures/
+android/gradle/
+android/local.properties
+android/app/build/
+android/app/src/main/assets/
+
+# =================
+# Flutter / Dart / Pub
+# =================
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+ephemeral/
+.widget_preview/
+lib/generated_plugin_registrant.dart
+
+# =================
+# Build, Symbols & Maps
+# =================
+/coverage/
+app.*.symbols
+app.*.map.json
+*.ipkg
+*.nksp
+
+# =================
+# Credentials / Keys / Certificates
+# =================
+*.keystore
+*.jks
+*.p12
+*.pem
+*.pfx
