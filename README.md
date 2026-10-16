@@ -99,7 +99,7 @@ Este proyecto está bajo la **Licencia No Comercial (Variante MIT)**.
 
 <div align="center">
 
-[![Ko-fi](https://img.shields.io/badge/Ko--fi-Buy%20me%20a%20coffee-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/TU_USUARIO_KOFI)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Buy%20me%20a%20coffee-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/alesdevcode)
 
 <br/>
 
