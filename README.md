@@ -85,8 +85,12 @@ lib/
 ---
 
 ## 📜 Licencia
+Este proyecto está bajo la **Licencia No Comercial (Variante MIT)**.
 
-Este proyecto se distribuye bajo la licencia MIT.
+* **Uso Personal y Libre:** Puedes descargar, usar, estudiar, modificar y compartir esta aplicación de forma totalmente gratuita.
+* **Sin Fines de Lucro:** Queda estrictamente prohibida la venta, comercialización, sublicenciamiento o lucro directo/indirecto derivado de este software o sus versiones modificadas.
+
+Para ver los términos completos, consulta el archivo [`LICENSE`](LICENSE).
 ---
 
 ## ☕ Apoya el Proyecto
