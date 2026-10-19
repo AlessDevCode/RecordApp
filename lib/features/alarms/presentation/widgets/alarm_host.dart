@@ -6,14 +6,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recordapp/features/alarms/data/services/notification_service.dart';
 import 'package:recordapp/features/alarms/domain/models/alert_sound.dart';
 import 'package:recordapp/features/alarms/presentation/providers/notification_providers.dart';
+import 'package:recordapp/features/alarms/presentation/providers/persistent_status_provider.dart';
 import 'package:recordapp/features/settings/domain/models/app_settings.dart';
 import 'package:recordapp/features/settings/presentation/providers/settings_providers.dart';
 import 'package:recordapp/features/tasks/domain/models/task.dart';
+import 'package:recordapp/features/tasks/presentation/providers/clock_provider.dart';
 import 'package:recordapp/features/tasks/presentation/providers/task_providers.dart';
 
 /// Envuelve la app y deja listas las notificaciones: canales, permisos y
 /// programación de todas las misiones. No muestra nada en pantalla: las
 /// alertas se entregan y se silencian únicamente desde la notificación nativa.
+///
+/// También mantiene al día la notificación fija de estado (si está activada en
+/// preferencias): se refresca cada minuto con el `clockProvider`, al cambiar
+/// las misiones, al cambiar los ajustes y al volver a la app.
 class AlarmHost extends ConsumerStatefulWidget {
   const AlarmHost({required this.child, super.key});
 
@@ -50,7 +56,13 @@ class _AlarmHostState extends ConsumerState<AlarmHost>
     // recupera cualquier cambio de permisos o de hora del sistema.
     if (state == AppLifecycleState.resumed) {
       unawaited(_sincronizar());
+      unawaited(_actualizarEstado());
     }
+  }
+
+  /// Refresca la notificación fija de estado (o la quita si está desactivada).
+  Future<void> _actualizarEstado() {
+    return ref.read(persistentStatusUpdaterProvider).actualizar();
   }
 
   Future<void> _arrancar() async {
@@ -65,11 +77,14 @@ class _AlarmHostState extends ConsumerState<AlarmHost>
     await servicio.crearCanales(sonidos);
     if (!mounted) return;
 
-    if (ajustes.notificationsEnabled) {
+    if (ajustes.notificationsEnabled || ajustes.persistentNotification) {
       await servicio.solicitarPermisos();
+      servicio.invalidarEstadoPermanente();
     }
     if (!mounted) return;
     await _sincronizar();
+    if (!mounted) return;
+    await _actualizarEstado();
   }
 
   /// Evita ejecuciones solapadas: si llega otra petición mientras se
@@ -96,8 +111,26 @@ class _AlarmHostState extends ConsumerState<AlarmHost>
 
   @override
   Widget build(BuildContext context) {
-    // Cambió el interruptor de notificaciones o el idioma: hay que
-    // reprogramar (y pedir permiso si se acaba de activar).
+    // Cada minuto (ClockProvider) y cada vez que cambian las misiones se
+    // refresca la notificación fija de estado. Escuchar aquí mantiene vivo el
+    // reloj mientras la app esté abierta.
+    ref.listen<AsyncValue<DateTime>>(clockProvider, (
+      AsyncValue<DateTime>? previous,
+      AsyncValue<DateTime> next,
+    ) {
+      unawaited(_actualizarEstado());
+    });
+    ref.listen<AsyncValue<List<Task>>>(taskListProvider, (
+      AsyncValue<List<Task>>? previous,
+      AsyncValue<List<Task>> next,
+    ) {
+      unawaited(_actualizarEstado());
+    });
+
+    // Cambió un ajuste: el interruptor de notificaciones o el idioma obligan a
+    // reprogramar (y pedir permiso si se acaba de activar); el de la
+    // notificación fija, el idioma y los formatos de fecha y hora obligan a
+    // redibujarla.
     ref.listen<AsyncValue<AppSettings>>(appSettingsProvider, (
       AsyncValue<AppSettings>? previous,
       AsyncValue<AppSettings> next,
@@ -109,13 +142,28 @@ class _AlarmHostState extends ConsumerState<AlarmHost>
       final bool cambioNotificaciones =
           antes.notificationsEnabled != ahora.notificationsEnabled;
       final bool cambioIdioma = antes.language != ahora.language;
-      if (!cambioNotificaciones && !cambioIdioma) return;
+      final bool cambioFijaOFormato =
+          antes.persistentNotification != ahora.persistentNotification ||
+              antes.dateFormat != ahora.dateFormat ||
+              antes.timeFormat != ahora.timeFormat;
+      if (!cambioNotificaciones && !cambioIdioma && !cambioFijaOFormato) {
+        return;
+      }
 
       unawaited(() async {
-        if (cambioNotificaciones && ahora.notificationsEnabled) {
-          await ref.read(notificationServiceProvider).solicitarPermisos();
+        final bool activaFija = ahora.persistentNotification &&
+            !antes.persistentNotification;
+        if ((cambioNotificaciones && ahora.notificationsEnabled) ||
+            activaFija) {
+          final NotificationService servicio =
+              ref.read(notificationServiceProvider);
+          await servicio.solicitarPermisos();
+          servicio.invalidarEstadoPermanente();
         }
-        await _sincronizar();
+        if (cambioNotificaciones || cambioIdioma) {
+          await _sincronizar();
+        }
+        await _actualizarEstado();
       }());
     });
 

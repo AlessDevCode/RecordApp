@@ -16,7 +16,7 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
       ) ??
       AppThemeMode.dark,
   notificationsEnabled: json['notifications_enabled'] as bool? ?? true,
-  cyberUsername: json['cyber_username'] as String? ?? 'ALESSANDRO',
+  cyberUsername: json['cyber_username'] as String? ?? 'OPERADOR_NEON',
   timeFormat:
       $enumDecodeNullable(
         _$TimeFormatPrefEnumMap,
@@ -25,6 +25,7 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
       ) ??
       TimeFormatPref.h24,
   dateFormat: json['date_format'] as String? ?? 'YYYY-MM-DD',
+  persistentNotification: json['persistent_notification'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$AppSettingsToJson(_AppSettings instance) =>
@@ -35,6 +36,7 @@ Map<String, dynamic> _$AppSettingsToJson(_AppSettings instance) =>
       'cyber_username': instance.cyberUsername,
       'time_format': _$TimeFormatPrefEnumMap[instance.timeFormat]!,
       'date_format': instance.dateFormat,
+      'persistent_notification': instance.persistentNotification,
     };
 
 const _$AppThemeModeEnumMap = {

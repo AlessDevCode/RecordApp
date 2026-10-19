@@ -59,6 +59,11 @@ class NotificationService {
   /// versión crea canales nuevos con la configuración correcta.
   static const String _vCanal = 'v2';
 
+  /// Id de la notificación permanente de estado. Está fuera del rango de las
+  /// misiones (idMision * 100), así que ni la programación ni la cancelación
+  /// de misiones la tocan.
+  static const int _idEstadoPermanente = 2147480100;
+
   /// Vibración de la alerta final: espera 0 ms y vibra 3000 ms.
   static final Int64List _patronTresSegundos = Int64List.fromList(
     <int>[0, 3000],
@@ -70,6 +75,11 @@ class NotificationService {
 
   final FlutterLocalNotificationsPlugin _plugin;
   bool _inicializado = false;
+
+  /// Último texto publicado en la notificación permanente (para no volver a
+  /// publicar lo mismo) y si ya se quitó en esta sesión.
+  String? _ultimoEstado;
+  bool _estadoOculto = false;
 
   AndroidFlutterLocalNotificationsPlugin? get _android => _plugin
       .resolvePlatformSpecificImplementation<
@@ -143,6 +153,14 @@ class NotificationService {
         'Recordatorios de misión',
         description: 'Estado de las misiones en curso',
         importance: Importance.defaultImportance,
+        playSound: false,
+        enableVibration: false,
+      ),
+      AndroidNotificationChannel(
+        'status_persistent_$_vCanal',
+        'Estado de RecordApp',
+        description: 'Muestra tu próxima misión o alarma en la barra de estado',
+        importance: Importance.low,
         playSound: false,
         enableVibration: false,
       ),
@@ -248,6 +266,78 @@ class NotificationService {
         debugPrint('❌ [NOTIFICATIONS] // No se pudo programar id=${item.id}: $e');
         debugPrintStack(stackTrace: s, maxFrames: 6);
       }
+    }
+  }
+
+  /// Publica o actualiza la notificación permanente de estado (la misma, con
+  /// un id fijo): no se puede descartar al deslizar, no se cierra al tocarla
+  /// y, con importancia baja, se actualiza sin sonar ni vibrar.
+  Future<void> mostrarEstadoPermanente({
+    required String titulo,
+    required String cuerpo,
+  }) async {
+    final String huella = '$titulo\n$cuerpo';
+    if (huella == _ultimoEstado) return;
+
+    await inicializar();
+    try {
+      if (!(await _android?.areNotificationsEnabled() ?? true)) {
+        debugPrint(
+          '⚠️ [STATUS] // Android tiene las notificaciones de RecordApp '
+          'desactivadas: la notificación fija no se verá.',
+        );
+      }
+      await _plugin.show(
+        id: _idEstadoPermanente,
+        title: titulo,
+        body: cuerpo,
+        notificationDetails: NotificationDetails(
+          android: AndroidNotificationDetails(
+            'status_persistent_$_vCanal',
+            'Estado de RecordApp',
+            channelDescription:
+                'Muestra tu próxima misión o alarma en la barra de estado',
+            importance: Importance.low,
+            priority: Priority.low,
+            playSound: false,
+            enableVibration: false,
+            ongoing: true,
+            autoCancel: false,
+            onlyAlertOnce: true,
+            showWhen: false,
+            icon: _icono,
+            channelAction: AndroidNotificationChannelAction.createIfNotExists,
+            category: AndroidNotificationCategory.status,
+            styleInformation: BigTextStyleInformation(cuerpo),
+          ),
+        ),
+      );
+      _ultimoEstado = huella;
+      _estadoOculto = false;
+      debugPrint('📌 [STATUS] // Notificación fija publicada: "$titulo"');
+    } catch (e, s) {
+      debugPrint('❌ [NOTIFICATIONS] // No se pudo mostrar el estado fijo: $e');
+      debugPrintStack(stackTrace: s, maxFrames: 6);
+    }
+  }
+
+  /// Olvida lo último publicado, para que la próxima actualización vuelva a
+  /// publicar aunque el texto sea el mismo (p. ej. tras conceder el permiso de
+  /// notificaciones, cuando una publicación anterior no llegó a mostrarse).
+  void invalidarEstadoPermanente() => _ultimoEstado = null;
+
+  /// Quita la notificación permanente de estado. Se llama siempre la primera
+  /// vez de cada sesión, porque pudo quedar publicada de la ejecución anterior.
+  Future<void> ocultarEstadoPermanente() async {
+    if (_estadoOculto) return;
+    await inicializar();
+    try {
+      await _plugin.cancel(id: _idEstadoPermanente);
+      _estadoOculto = true;
+      _ultimoEstado = null;
+      debugPrint('📌 [STATUS] // Notificación fija quitada.');
+    } catch (e) {
+      debugPrint('❌ [NOTIFICATIONS] // No se pudo quitar el estado fijo: $e');
     }
   }
 

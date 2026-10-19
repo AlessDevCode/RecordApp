@@ -16,7 +16,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppSettings {
 
- String get language;@JsonKey(name: 'theme', unknownEnumValue: AppThemeMode.dark) AppThemeMode get themeMode;@JsonKey(name: 'notifications_enabled') bool get notificationsEnabled;@JsonKey(name: 'cyber_username') String get cyberUsername;@JsonKey(name: 'time_format', unknownEnumValue: TimeFormatPref.h24) TimeFormatPref get timeFormat;@JsonKey(name: 'date_format') String get dateFormat;
+ String get language;@JsonKey(name: 'theme', unknownEnumValue: AppThemeMode.dark) AppThemeMode get themeMode;@JsonKey(name: 'notifications_enabled') bool get notificationsEnabled;@JsonKey(name: 'cyber_username') String get cyberUsername;@JsonKey(name: 'time_format', unknownEnumValue: TimeFormatPref.h24) TimeFormatPref get timeFormat;@JsonKey(name: 'date_format') String get dateFormat;/// Notificación fija en la barra de estado con la próxima misión o alarma.
+/// Desactivada por defecto.
+@JsonKey(name: 'persistent_notification') bool get persistentNotification;
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +32,20 @@ $AppSettingsCopyWith<AppSettings> get copyWith => _$AppSettingsCopyWithImpl<AppS
 @override
 bool operator ==(Object other) {
   final _this = this as AppSettings;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.language, _this.language) || other.language == _this.language)&&(identical(other.themeMode, _this.themeMode) || other.themeMode == _this.themeMode)&&(identical(other.notificationsEnabled, _this.notificationsEnabled) || other.notificationsEnabled == _this.notificationsEnabled)&&(identical(other.cyberUsername, _this.cyberUsername) || other.cyberUsername == _this.cyberUsername)&&(identical(other.timeFormat, _this.timeFormat) || other.timeFormat == _this.timeFormat)&&(identical(other.dateFormat, _this.dateFormat) || other.dateFormat == _this.dateFormat));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.language, _this.language) || other.language == _this.language)&&(identical(other.themeMode, _this.themeMode) || other.themeMode == _this.themeMode)&&(identical(other.notificationsEnabled, _this.notificationsEnabled) || other.notificationsEnabled == _this.notificationsEnabled)&&(identical(other.cyberUsername, _this.cyberUsername) || other.cyberUsername == _this.cyberUsername)&&(identical(other.timeFormat, _this.timeFormat) || other.timeFormat == _this.timeFormat)&&(identical(other.dateFormat, _this.dateFormat) || other.dateFormat == _this.dateFormat)&&(identical(other.persistentNotification, _this.persistentNotification) || other.persistentNotification == _this.persistentNotification));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as AppSettings;
-  return Object.hash(runtimeType,_this.language,_this.themeMode,_this.notificationsEnabled,_this.cyberUsername,_this.timeFormat,_this.dateFormat);
+  return Object.hash(runtimeType,_this.language,_this.themeMode,_this.notificationsEnabled,_this.cyberUsername,_this.timeFormat,_this.dateFormat,_this.persistentNotification);
 }
 
 @override
 String toString() {
   final _this = this as AppSettings;
-  return 'AppSettings(language: ${_this.language}, themeMode: ${_this.themeMode}, notificationsEnabled: ${_this.notificationsEnabled}, cyberUsername: ${_this.cyberUsername}, timeFormat: ${_this.timeFormat}, dateFormat: ${_this.dateFormat})';
+  return 'AppSettings(language: ${_this.language}, themeMode: ${_this.themeMode}, notificationsEnabled: ${_this.notificationsEnabled}, cyberUsername: ${_this.cyberUsername}, timeFormat: ${_this.timeFormat}, dateFormat: ${_this.dateFormat}, persistentNotification: ${_this.persistentNotification})';
 }
 
 
@@ -54,7 +56,7 @@ abstract mixin class $AppSettingsCopyWith<$Res>  {
   factory $AppSettingsCopyWith(AppSettings value, $Res Function(AppSettings) _then) = _$AppSettingsCopyWithImpl;
 @useResult
 $Res call({
- String language,@JsonKey(name: 'theme', unknownEnumValue: AppThemeMode.dark) AppThemeMode themeMode,@JsonKey(name: 'notifications_enabled') bool notificationsEnabled,@JsonKey(name: 'cyber_username') String cyberUsername,@JsonKey(name: 'time_format', unknownEnumValue: TimeFormatPref.h24) TimeFormatPref timeFormat,@JsonKey(name: 'date_format') String dateFormat
+ String language,@JsonKey(name: 'theme', unknownEnumValue: AppThemeMode.dark) AppThemeMode themeMode,@JsonKey(name: 'notifications_enabled') bool notificationsEnabled,@JsonKey(name: 'cyber_username') String cyberUsername,@JsonKey(name: 'time_format', unknownEnumValue: TimeFormatPref.h24) TimeFormatPref timeFormat,@JsonKey(name: 'date_format') String dateFormat,@JsonKey(name: 'persistent_notification') bool persistentNotification
 });
 
 
@@ -71,7 +73,7 @@ class _$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? language = null,Object? themeMode = null,Object? notificationsEnabled = null,Object? cyberUsername = null,Object? timeFormat = null,Object? dateFormat = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? language = null,Object? themeMode = null,Object? notificationsEnabled = null,Object? cyberUsername = null,Object? timeFormat = null,Object? dateFormat = null,Object? persistentNotification = null,}) {
   return _then(AppSettings(
 language: null == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
 as String,themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
@@ -79,7 +81,8 @@ as AppThemeMode,notificationsEnabled: null == notificationsEnabled ? _self.notif
 as bool,cyberUsername: null == cyberUsername ? _self.cyberUsername : cyberUsername // ignore: cast_nullable_to_non_nullable
 as String,timeFormat: null == timeFormat ? _self.timeFormat : timeFormat // ignore: cast_nullable_to_non_nullable
 as TimeFormatPref,dateFormat: null == dateFormat ? _self.dateFormat : dateFormat // ignore: cast_nullable_to_non_nullable
-as String,
+as String,persistentNotification: null == persistentNotification ? _self.persistentNotification : persistentNotification // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -164,10 +167,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String language, @JsonKey(name: 'theme', unknownEnumValue: AppThemeMode.dark)  AppThemeMode themeMode, @JsonKey(name: 'notifications_enabled')  bool notificationsEnabled, @JsonKey(name: 'cyber_username')  String cyberUsername, @JsonKey(name: 'time_format', unknownEnumValue: TimeFormatPref.h24)  TimeFormatPref timeFormat, @JsonKey(name: 'date_format')  String dateFormat)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String language, @JsonKey(name: 'theme', unknownEnumValue: AppThemeMode.dark)  AppThemeMode themeMode, @JsonKey(name: 'notifications_enabled')  bool notificationsEnabled, @JsonKey(name: 'cyber_username')  String cyberUsername, @JsonKey(name: 'time_format', unknownEnumValue: TimeFormatPref.h24)  TimeFormatPref timeFormat, @JsonKey(name: 'date_format')  String dateFormat, @JsonKey(name: 'persistent_notification')  bool persistentNotification)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.language,_that.themeMode,_that.notificationsEnabled,_that.cyberUsername,_that.timeFormat,_that.dateFormat);case _:
+return $default(_that.language,_that.themeMode,_that.notificationsEnabled,_that.cyberUsername,_that.timeFormat,_that.dateFormat,_that.persistentNotification);case _:
   return orElse();
 
 }
@@ -185,10 +188,10 @@ return $default(_that.language,_that.themeMode,_that.notificationsEnabled,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String language, @JsonKey(name: 'theme', unknownEnumValue: AppThemeMode.dark)  AppThemeMode themeMode, @JsonKey(name: 'notifications_enabled')  bool notificationsEnabled, @JsonKey(name: 'cyber_username')  String cyberUsername, @JsonKey(name: 'time_format', unknownEnumValue: TimeFormatPref.h24)  TimeFormatPref timeFormat, @JsonKey(name: 'date_format')  String dateFormat)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String language, @JsonKey(name: 'theme', unknownEnumValue: AppThemeMode.dark)  AppThemeMode themeMode, @JsonKey(name: 'notifications_enabled')  bool notificationsEnabled, @JsonKey(name: 'cyber_username')  String cyberUsername, @JsonKey(name: 'time_format', unknownEnumValue: TimeFormatPref.h24)  TimeFormatPref timeFormat, @JsonKey(name: 'date_format')  String dateFormat, @JsonKey(name: 'persistent_notification')  bool persistentNotification)  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings():
-return $default(_that.language,_that.themeMode,_that.notificationsEnabled,_that.cyberUsername,_that.timeFormat,_that.dateFormat);case _:
+return $default(_that.language,_that.themeMode,_that.notificationsEnabled,_that.cyberUsername,_that.timeFormat,_that.dateFormat,_that.persistentNotification);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -205,10 +208,10 @@ return $default(_that.language,_that.themeMode,_that.notificationsEnabled,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String language, @JsonKey(name: 'theme', unknownEnumValue: AppThemeMode.dark)  AppThemeMode themeMode, @JsonKey(name: 'notifications_enabled')  bool notificationsEnabled, @JsonKey(name: 'cyber_username')  String cyberUsername, @JsonKey(name: 'time_format', unknownEnumValue: TimeFormatPref.h24)  TimeFormatPref timeFormat, @JsonKey(name: 'date_format')  String dateFormat)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String language, @JsonKey(name: 'theme', unknownEnumValue: AppThemeMode.dark)  AppThemeMode themeMode, @JsonKey(name: 'notifications_enabled')  bool notificationsEnabled, @JsonKey(name: 'cyber_username')  String cyberUsername, @JsonKey(name: 'time_format', unknownEnumValue: TimeFormatPref.h24)  TimeFormatPref timeFormat, @JsonKey(name: 'date_format')  String dateFormat, @JsonKey(name: 'persistent_notification')  bool persistentNotification)?  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.language,_that.themeMode,_that.notificationsEnabled,_that.cyberUsername,_that.timeFormat,_that.dateFormat);case _:
+return $default(_that.language,_that.themeMode,_that.notificationsEnabled,_that.cyberUsername,_that.timeFormat,_that.dateFormat,_that.persistentNotification);case _:
   return null;
 
 }
@@ -220,7 +223,7 @@ return $default(_that.language,_that.themeMode,_that.notificationsEnabled,_that.
 @JsonSerializable()
 
 class _AppSettings implements AppSettings {
-  const _AppSettings({this.language = 'es', @JsonKey(name: 'theme', unknownEnumValue: AppThemeMode.dark) this.themeMode = AppThemeMode.dark, @JsonKey(name: 'notifications_enabled') this.notificationsEnabled = true, @JsonKey(name: 'cyber_username') this.cyberUsername = 'ALESSANDRO', @JsonKey(name: 'time_format', unknownEnumValue: TimeFormatPref.h24) this.timeFormat = TimeFormatPref.h24, @JsonKey(name: 'date_format') this.dateFormat = 'YYYY-MM-DD'});
+  const _AppSettings({this.language = 'es', @JsonKey(name: 'theme', unknownEnumValue: AppThemeMode.dark) this.themeMode = AppThemeMode.dark, @JsonKey(name: 'notifications_enabled') this.notificationsEnabled = true, @JsonKey(name: 'cyber_username') this.cyberUsername = 'OPERADOR_NEON', @JsonKey(name: 'time_format', unknownEnumValue: TimeFormatPref.h24) this.timeFormat = TimeFormatPref.h24, @JsonKey(name: 'date_format') this.dateFormat = 'YYYY-MM-DD', @JsonKey(name: 'persistent_notification') this.persistentNotification = false});
   factory _AppSettings.fromJson(Map<String, dynamic> json) => _$AppSettingsFromJson(json);
 
 @override@JsonKey() final  String language;
@@ -229,6 +232,9 @@ class _AppSettings implements AppSettings {
 @override@JsonKey(name: 'cyber_username') final  String cyberUsername;
 @override@JsonKey(name: 'time_format', unknownEnumValue: TimeFormatPref.h24) final  TimeFormatPref timeFormat;
 @override@JsonKey(name: 'date_format') final  String dateFormat;
+/// Notificación fija en la barra de estado con la próxima misión o alarma.
+/// Desactivada por defecto.
+@override@JsonKey(name: 'persistent_notification') final  bool persistentNotification;
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
@@ -243,18 +249,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.language, language) || other.language == language)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.notificationsEnabled, notificationsEnabled) || other.notificationsEnabled == notificationsEnabled)&&(identical(other.cyberUsername, cyberUsername) || other.cyberUsername == cyberUsername)&&(identical(other.timeFormat, timeFormat) || other.timeFormat == timeFormat)&&(identical(other.dateFormat, dateFormat) || other.dateFormat == dateFormat));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.language, language) || other.language == language)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.notificationsEnabled, notificationsEnabled) || other.notificationsEnabled == notificationsEnabled)&&(identical(other.cyberUsername, cyberUsername) || other.cyberUsername == cyberUsername)&&(identical(other.timeFormat, timeFormat) || other.timeFormat == timeFormat)&&(identical(other.dateFormat, dateFormat) || other.dateFormat == dateFormat)&&(identical(other.persistentNotification, persistentNotification) || other.persistentNotification == persistentNotification));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,language,themeMode,notificationsEnabled,cyberUsername,timeFormat,dateFormat);
+    return Object.hash(runtimeType,language,themeMode,notificationsEnabled,cyberUsername,timeFormat,dateFormat,persistentNotification);
 }
 
 @override
 String toString() {
-    return 'AppSettings(language: $language, themeMode: $themeMode, notificationsEnabled: $notificationsEnabled, cyberUsername: $cyberUsername, timeFormat: $timeFormat, dateFormat: $dateFormat)';
+    return 'AppSettings(language: $language, themeMode: $themeMode, notificationsEnabled: $notificationsEnabled, cyberUsername: $cyberUsername, timeFormat: $timeFormat, dateFormat: $dateFormat, persistentNotification: $persistentNotification)';
 }
 
 
@@ -265,7 +271,7 @@ abstract mixin class _$AppSettingsCopyWith<$Res> implements $AppSettingsCopyWith
   factory _$AppSettingsCopyWith(_AppSettings value, $Res Function(_AppSettings) _then) = __$AppSettingsCopyWithImpl;
 @override @useResult
 $Res call({
- String language,@JsonKey(name: 'theme', unknownEnumValue: AppThemeMode.dark) AppThemeMode themeMode,@JsonKey(name: 'notifications_enabled') bool notificationsEnabled,@JsonKey(name: 'cyber_username') String cyberUsername,@JsonKey(name: 'time_format', unknownEnumValue: TimeFormatPref.h24) TimeFormatPref timeFormat,@JsonKey(name: 'date_format') String dateFormat
+ String language,@JsonKey(name: 'theme', unknownEnumValue: AppThemeMode.dark) AppThemeMode themeMode,@JsonKey(name: 'notifications_enabled') bool notificationsEnabled,@JsonKey(name: 'cyber_username') String cyberUsername,@JsonKey(name: 'time_format', unknownEnumValue: TimeFormatPref.h24) TimeFormatPref timeFormat,@JsonKey(name: 'date_format') String dateFormat,@JsonKey(name: 'persistent_notification') bool persistentNotification
 });
 
 
@@ -282,7 +288,7 @@ class __$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? language = null,Object? themeMode = null,Object? notificationsEnabled = null,Object? cyberUsername = null,Object? timeFormat = null,Object? dateFormat = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? language = null,Object? themeMode = null,Object? notificationsEnabled = null,Object? cyberUsername = null,Object? timeFormat = null,Object? dateFormat = null,Object? persistentNotification = null,}) {
   return _then(_AppSettings(
 language: null == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
 as String,themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
@@ -290,7 +296,8 @@ as AppThemeMode,notificationsEnabled: null == notificationsEnabled ? _self.notif
 as bool,cyberUsername: null == cyberUsername ? _self.cyberUsername : cyberUsername // ignore: cast_nullable_to_non_nullable
 as String,timeFormat: null == timeFormat ? _self.timeFormat : timeFormat // ignore: cast_nullable_to_non_nullable
 as TimeFormatPref,dateFormat: null == dateFormat ? _self.dateFormat : dateFormat // ignore: cast_nullable_to_non_nullable
-as String,
+as String,persistentNotification: null == persistentNotification ? _self.persistentNotification : persistentNotification // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

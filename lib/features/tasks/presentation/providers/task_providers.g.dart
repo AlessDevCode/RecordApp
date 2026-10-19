@@ -188,7 +188,7 @@ final class TaskListProvider
   TaskList create() => TaskList();
 }
 
-String _$taskListHash() => r'd1d4201bfccb9adf7391549eeec62e2db6c7b34d';
+String _$taskListHash() => r'ab06cda6d4400499345cfe492af4b653f03c981a';
 
 abstract class _$TaskList extends $AsyncNotifier<List<Task>> {
   FutureOr<List<Task>> build();
@@ -240,7 +240,7 @@ final class TaskFilterProvider
   }
 }
 
-String _$taskFilterHash() => r'1da627d3002519d1b03fe5f4225b9a1e0ab26821';
+String _$taskFilterHash() => r'c329505be8c501e4a1cce6d15d9ca9dd9dc68aa8';
 
 abstract class _$TaskFilter extends $Notifier<TaskFilterState> {
   TaskFilterState build();
@@ -299,7 +299,7 @@ final class FilteredTasksProvider
   }
 }
 
-String _$filteredTasksHash() => r'08ab6fb9de640c93860d3ae9a79ace62931a9c90';
+String _$filteredTasksHash() => r'4330699feb0c01f042ea815aee29476d1694cd20';
 
 /// Sugerencia de categoría en tiempo real a partir del título.
 

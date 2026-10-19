@@ -182,7 +182,7 @@ final class AppSettingsNotifierProvider
 }
 
 String _$appSettingsNotifierHash() =>
-    r'fbb3fd8204cd7f4ffede27cc394ca1b42ba1b503';
+    r'eb386ed41ff746773efc51fef7a65d9c5506e661';
 
 /// Gestiona y persiste en SQLite toda la configuración, incluido el tema.
 

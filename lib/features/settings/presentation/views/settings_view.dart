@@ -8,6 +8,7 @@ import 'package:recordapp/features/settings/domain/models/app_settings.dart';
 import 'package:recordapp/features/settings/domain/models/app_theme_mode.dart';
 import 'package:recordapp/features/settings/domain/models/time_format_pref.dart';
 import 'package:recordapp/features/settings/presentation/providers/settings_providers.dart';
+import 'package:recordapp/features/settings/presentation/widgets/about_header.dart';
 import 'package:recordapp/features/settings/presentation/widgets/settings_section.dart';
 import 'package:recordapp/features/settings/presentation/widgets/username_field.dart';
 
@@ -48,6 +49,7 @@ class SettingsView extends ConsumerWidget {
           return ListView(
             padding: const EdgeInsets.only(bottom: 32),
             children: <Widget>[
+              const AboutHeader(),
               SettingsSection(
                 title: ref.tr('settings.appearance', 'APARIENCIA'),
               ),
@@ -99,8 +101,16 @@ class SettingsView extends ConsumerWidget {
                     segments: const <ButtonSegment<String>>[
                       ButtonSegment<String>(value: 'es', label: Text('Español')),
                       ButtonSegment<String>(value: 'en', label: Text('English')),
+                      ButtonSegment<String>(
+                        value: 'pt',
+                        label: Text('Português'),
+                      ),
                     ],
-                    selected: <String>{s.language == 'en' ? 'en' : 'es'},
+                    selected: <String>{
+                      const <String>['es', 'en', 'pt'].contains(s.language)
+                          ? s.language
+                          : 'es',
+                    },
                     onSelectionChanged: (Set<String> seleccion) {
                       unawaited(notifier.setLanguage(seleccion.first));
                     },
@@ -120,6 +130,24 @@ class SettingsView extends ConsumerWidget {
                 onChanged: (bool valor) {
                   unawaited(
                     notifier.setNotificationsEnabled(habilitadas: valor),
+                  );
+                },
+              ),
+              SwitchListTile(
+                secondary: const Icon(Icons.push_pin_outlined),
+                title: Text(
+                  ref.tr('settings.persistent', 'Notificación fija'),
+                ),
+                subtitle: Text(
+                  ref.tr(
+                    'settings.persistent_desc',
+                    'Muestra en la barra de estado tu próxima misión o alarma',
+                  ),
+                ),
+                value: s.persistentNotification,
+                onChanged: (bool valor) {
+                  unawaited(
+                    notifier.setPersistentNotification(activada: valor),
                   );
                 },
               ),

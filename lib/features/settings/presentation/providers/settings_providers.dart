@@ -54,6 +54,11 @@ class AppSettingsNotifier extends _$AppSettingsNotifier {
         (AppSettings s) => s.copyWith(notificationsEnabled: habilitadas),
       );
 
+  Future<void> setPersistentNotification({required bool activada}) =>
+      _persistir(
+        (AppSettings s) => s.copyWith(persistentNotification: activada),
+      );
+
   Future<void> setCyberUsername(String nombre) => _persistir(
         (AppSettings s) => s.copyWith(
           cyberUsername: nombre.trim().isEmpty ? s.cyberUsername : nombre.trim(),

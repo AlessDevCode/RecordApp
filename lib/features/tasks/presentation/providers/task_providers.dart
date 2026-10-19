@@ -1,7 +1,10 @@
 // lib/features/tasks/presentation/providers/task_providers.dart
+import 'dart:async';
+
 import 'package:recordapp/core/database/database_provider.dart';
 import 'package:recordapp/features/alarms/domain/services/reminder_planner.dart';
 import 'package:recordapp/features/alarms/presentation/providers/notification_providers.dart';
+import 'package:recordapp/features/alarms/presentation/providers/persistent_status_provider.dart';
 import 'package:recordapp/features/tasks/data/datasources/task_local_datasource.dart';
 import 'package:recordapp/features/tasks/data/repositories/task_repository_impl.dart';
 import 'package:recordapp/features/tasks/domain/models/alarm_type.dart';
@@ -202,6 +205,7 @@ class TaskList extends _$TaskList {
 
     await _reprogramar(guardada);
     await cargarTareas();
+    _refrescarEstadoFijo();
     return true;
   }
 
@@ -211,6 +215,7 @@ class TaskList extends _$TaskList {
     await repo.updateTask(tarea);
     await _reprogramar(tarea);
     await cargarTareas();
+    _refrescarEstadoFijo();
   }
 
   /// Elimina físicamente la tarea, cancela sus notificaciones y actualiza el
@@ -224,6 +229,7 @@ class TaskList extends _$TaskList {
     state = AsyncData<List<Task>>(
       actuales.where((Task t) => t.id != taskId).toList(),
     );
+    _refrescarEstadoFijo();
   }
 
   /// Marca una tarea como completada o pendiente. La tarea queda fijada en la
@@ -263,6 +269,7 @@ class TaskList extends _$TaskList {
         break;
       }
     }
+    _refrescarEstadoFijo();
   }
 
   /// Check de una rutina (weekly / custom_dates).
@@ -340,6 +347,15 @@ class TaskList extends _$TaskList {
       actuales.map((Task t) => t.id == id ? rutina : t).toList(),
     );
     await _reprogramar(rutina);
+    _refrescarEstadoFijo();
+  }
+
+  /// Refresca de inmediato la notificación fija de estado, sin esperar al
+  /// siguiente minuto del reloj ni al aviso de cambio de la lista. Se llama al
+  /// terminar cada alta, edición, baja o check, cuando la lista en memoria ya
+  /// está actualizada.
+  void _refrescarEstadoFijo() {
+    unawaited(ref.read(persistentStatusUpdaterProvider).actualizar());
   }
 
   Future<void> _reprogramar(Task tarea) async {
