@@ -207,7 +207,7 @@ class TaskCard extends ConsumerWidget {
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: <Widget>[
                             Text(
-                              task.categoriaId,
+                              ref.trCategoria(task.categoriaId),
                               style: theme.textTheme.labelSmall?.copyWith(
                                 color: scheme.primary,
                                 fontWeight: FontWeight.bold,

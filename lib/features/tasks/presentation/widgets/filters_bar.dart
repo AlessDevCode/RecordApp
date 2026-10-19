@@ -75,7 +75,7 @@ class FiltersBar extends ConsumerWidget {
           for (final TaskCategory categoria in SmartTagger.categorias)
             separado(
               ChoiceChip(
-                label: Text('${categoria.emoji} ${categoria.nombre}'),
+                label: Text('${categoria.emoji} ${ref.trCategoria(categoria.nombre)}'),
                 selected: filtro.categoria == categoria.nombre,
                 onSelected: (bool seleccionada) =>
                     notifier.establecerCategoria(

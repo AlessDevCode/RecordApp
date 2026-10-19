@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:recordapp/features/settings/domain/services/translator.dart';
+import 'package:recordapp/features/tasks/domain/models/task_category.dart';
+import 'package:recordapp/features/tasks/domain/services/smart_tagger.dart';
 
 /// `{"a": {"b": "x"}}` -> `{"a.b": "x"}`.
 Map<String, String> aplanar(Map<String, dynamic> nodo, [String prefijo = '']) {
@@ -62,6 +64,24 @@ void main() {
           expect(obtenidos, esperados, reason: '$i / $clave');
         }
       });
+    });
+
+    test('cada categoría tiene su nombre traducido en los tres idiomas', () {
+      for (final TaskCategory c in SmartTagger.categorias) {
+        for (final String i in idiomas) {
+          expect(
+            planos[i]!['categories.${c.nombre.toLowerCase()}'],
+            isNotNull,
+            reason: '$i / categories.${c.nombre.toLowerCase()}',
+          );
+        }
+      }
+    });
+
+    test('el texto de la categoría ALARMA forzada usa el marcador {category}', () {
+      for (final String i in idiomas) {
+        expect(planos[i]!['editor.alarm_forced'], contains('{category}'), reason: i);
+      }
     });
 
     test('las listas de días tienen 7 elementos', () {

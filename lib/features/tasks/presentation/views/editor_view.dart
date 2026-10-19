@@ -1208,7 +1208,9 @@ class _EditorViewState extends ConsumerState<EditorView> {
                 for (final TaskCategory categoria in SmartTagger.categorias)
                   DropdownMenuItem<String>(
                     value: categoria.nombre,
-                    child: Text('${categoria.emoji} ${categoria.nombre}'),
+                    child: Text(
+                      '${categoria.emoji} ${ref.trCategoria(categoria.nombre)}',
+                    ),
                   ),
               ],
               onChanged: (String? valor) {
@@ -1229,7 +1231,7 @@ class _EditorViewState extends ConsumerState<EditorView> {
                     const SizedBox(width: 6),
                     Text(
                       '${ref.tr('editor.detected', 'Categoría detectada')}: '
-                      '${automatica.emoji} ${automatica.nombre}',
+                      '${automatica.emoji} ${ref.trCategoria(automatica.nombre)}',
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.primary,
                       ),
@@ -1342,10 +1344,12 @@ class _EditorViewState extends ConsumerState<EditorView> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8, left: 4),
                   child: Text(
-                    ref.tr(
-                      'editor.alarm_forced',
-                      'La categoría ALARMA siempre usa sonido.',
-                    ),
+                    ref
+                        .tr(
+                          'editor.alarm_forced',
+                          'La categoría {category} siempre usa sonido.',
+                        )
+                        .replaceAll('{category}', ref.trCategoria('ALARMA')),
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),

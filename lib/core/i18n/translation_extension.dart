@@ -20,4 +20,15 @@ extension TranslationRef on WidgetRef {
   String trOnce(String key, String fallback) {
     return translate(read(translatorProvider).value, key, fallback);
   }
+
+  /// Nombre visible de una categoría (`TRABAJO` → `WORK`, `TRABALHO`…).
+  ///
+  /// El identificador (`TRABAJO`) es lo que se guarda en la base de datos y lo
+  /// que usan los filtros: NO cambia con el idioma. Solo se traduce lo que se
+  /// muestra. Si no hay traducción, se muestra el propio identificador.
+  /// Para usar dentro de `build` (se suscribe a cambios de idioma).
+  String trCategoria(String id) {
+    final String limpio = id.trim();
+    return tr('categories.${limpio.toLowerCase()}', limpio);
+  }
 }

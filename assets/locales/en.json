@@ -8,6 +8,17 @@
     "today": "Today",
     "tomorrow": "Tomorrow"
   },
+  "categories": {
+    "alarma": "ALARM",
+    "compras": "SHOPPING",
+    "estudio": "STUDY",
+    "finanzas": "FINANCE",
+    "hogar": "HOME",
+    "notas": "NOTES",
+    "salud": "HEALTH",
+    "social": "SOCIAL",
+    "trabajo": "WORK"
+  },
   "completed": {
     "done_on": "Done on",
     "mission": "Mission completed",
@@ -15,7 +26,7 @@
   },
   "editor": {
     "alarm": "Alarm type",
-    "alarm_forced": "The ALARMA category always uses sound.",
+    "alarm_forced": "The {category} category always uses sound.",
     "alarm_silent": "Silent",
     "alarm_silent_info": "You will be notified when the mission deadline arrives",
     "alarm_sound": "Sound",
